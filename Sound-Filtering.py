@@ -10,15 +10,16 @@ from scipy.io.wavfile import read
 from scipy.io.wavfile import write     # Imported libaries such as numpy, scipy(read, write), matplotlib.pyplot
 from scipy import signal
 import matplotlib.pyplot as plt
-get_ipython().magic('matplotlib inline')
+#get_ipython().magic('matplotlib inline')
 
 
 # In[10]:
 
 
 # Replace this with the location of your downloaded file.
-(Frequency, array) = read('D:\\window\\user\\david\\Downloads\\eagle.wav') # Reading the sound file. 
-
+(Frequency, array) = read('G19.wav') # Reading the sound file. 
+print(Frequency, array)
+write("copia_entrada.wav", Frequency, array)
 
 # In[11]:
 
@@ -50,27 +51,28 @@ scale = sp.linspace(0, Frequency, len(array))
 # In[15]:
 
 
-plt.stem(scale[0:5000], np.abs(FourierTransformation[0:5000]), 'r')  # The size of our diagram
-plt.title('Signal spectrum after FFT')
-plt.xlabel('Frequency(Hz)')
-plt.ylabel('Amplitude')
+#plt.stem(scale[0:5000], np.abs(FourierTransformation[0:5000]), 'r')  # The size of our diagram
+#plt.title('Signal spectrum after FFT')
+#plt.xlabel('Frequency(Hz)')
+#plt.ylabel('Amplitude')
 
 
 # In[16]:
 
 
-GuassianNoise = np.random.rand(len(FourierTransformation)) # Adding guassian Noise to the signal.
+GuassianNoise = np.random.rand(len(FourierTransformation),2) # Adding guassian Noise to the signal.
 
 
 # In[17]:
 
 
-NewSound = GuassianNoise + array
+NewSound = GuassianNoise*100 + array
 
 
 # In[18]:
 
-
+NewSound=np.around(10000*NewSound).astype(int)
+print(NewSound)
 write("New-Sound-Added-With-Guassian-Noise.wav", Frequency, NewSound) # Saving it to the file.
 
 
@@ -102,7 +104,11 @@ plt.ylabel('Amplitude')
 
 
 # In[22]:
-
+print(len(newFilteredSignal)) # length of our array
+newFilteredSignal=np.around(10000*newFilteredSignal).astype(int)
+print(newFilteredSignal)
 
 write("New-Filtered-Eagle-Sound.wav", Frequency, newFilteredSignal) # Saving it to the file.
 
+
+# %%
